@@ -14,7 +14,12 @@ public class Author {
 		this.lastName = lastName;
 	}
 
-    public Object getLastName() {
+    public enum SortingType{
+        BY_FIRST_NAME,
+        BY_LAST_NAME
+    }
+
+    public String getLastName() {
 		return  this.lastName;
     }
 

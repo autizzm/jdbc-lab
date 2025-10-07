@@ -87,6 +87,41 @@ public class StatementAction {
 		}
 	}
 
+	public void getAuthorInfoSorted(Author.SortingType sortingType) {
+		try {
+			Comparator<Author> comparator = null;
+			List<Author> authors = authorDao.getAll();
+			if (authors.isEmpty()) {
+				System.out.println("Таблица авторов пуста!");
+			} else {
+				switch(sortingType) {
+					case BY_FIRST_NAME:
+						comparator = new Comparator<Author>() {
+						@Override
+						public int compare(Author o1, Author o2) {
+							return o1.getFirstName().compareTo(o2.getFirstName());
+						}
+					};
+						break;
+					case BY_LAST_NAME:
+						comparator = new Comparator<Author>() {
+							@Override
+							public int compare(Author o1, Author o2) {
+								return o1.getLastName().compareTo(o2.getLastName());
+							}
+						};
+				}
+				Collections.sort(authors, comparator);
+				System.out.println("[Авторы]");
+				for (Author author : authors) {
+					System.out.println(author);
+				}
+			}
+		} catch (RuntimeException e) {
+			logger.severe("При просмотре информации возникла ошибка: " + e.getMessage());
+		}
+	}
+
 	private List<Author> getDefaultAuthors() {
 		List<Author> authors = new ArrayList<>();
 		authors.add(new Author("Лев", "Толстой"));
