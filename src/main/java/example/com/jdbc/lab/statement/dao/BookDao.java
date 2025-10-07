@@ -1,10 +1,7 @@
 package example.com.jdbc.lab.statement.dao;
 
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.logging.Logger;
 
 import example.com.jdbc.lab.connection.ConnectionManager;
@@ -45,6 +42,24 @@ public class BookDao implements StatementDao<Book> {
 		}
 	}
 
+	public Map<String, Integer> getAmtOfBooksPerAuthor(){
+		Map<String, Integer> result = new HashMap<>();
+		try(Statement stmt = ConnectionManager.getConnection().createStatement()){
+			ResultSet rs = stmt.executeQuery("SELECT authors.first_name, authors.last_name, COUNT(*) " +
+					"FROM books " +
+					"JOIN authors ON books.author_id = authors.id " +
+					"GROUP BY authors.id;");
+
+			while(rs.next()){
+				String authorName = rs.getString(1) + " " + rs.getString(2);
+				int amtOfBooks = rs.getInt(3);
+				result.put(authorName, amtOfBooks);
+			}
+		} catch(SQLException e){
+			logger.severe("Ошибка: " + e.getMessage());
+		}
+		return result;
+	}
 
 	@Override
 	public int getCount() {

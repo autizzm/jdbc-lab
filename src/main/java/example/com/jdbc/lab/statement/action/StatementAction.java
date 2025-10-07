@@ -70,7 +70,7 @@ public class StatementAction {
 		}
 	}
 
-	public void getAllInfo() {
+	public void viewAllInfo() {
 		try {
 			List<Author> authors = authorDao.getAll();
 			if (authors.isEmpty()) {
@@ -113,7 +113,7 @@ public class StatementAction {
 		}
 	}
 
-	public void getAuthorInfoSorted(Author.SortingType sortingType) {
+	public void viewAuthorInfoSorted(Author.SortingType sortingType) {
 		try {
 			Comparator<Author> comparator = null;
 			List<Author> authors = authorDao.getAll();
@@ -148,7 +148,7 @@ public class StatementAction {
 		}
 	}
 
-	public void getBookInfoFiltered(int year) {
+	public void viewBookInfoFiltered(int year) {
 		try {
 			Comparator<Book> comparator = new Comparator<Book>() {
 				@Override
@@ -205,6 +205,13 @@ public class StatementAction {
 			}
 			int bookToBeAlteredIndex = Math.abs(random.nextInt() % bookIds.size());
 			bookDao.update(bookIds.get(bookToBeAlteredIndex), newBookName);
+		}
+	}
+
+	public void viewAmtOfBooksPerAuthor(){
+		Map<String, Integer> authors = bookDao.getAmtOfBooksPerAuthor();
+		for(String authorName : authors.keySet()){
+			System.out.println(authorName + " - " + authors.get(authorName));
 		}
 	}
 

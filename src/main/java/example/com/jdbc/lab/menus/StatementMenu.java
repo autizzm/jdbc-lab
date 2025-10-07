@@ -21,6 +21,7 @@ public class StatementMenu {
 		options.add("Просмотреть автров с сортировкой");
 		options.add("Посмотреть книги, выпущенные после определённого года");
 		options.add("Изменить имя случайной книги в определённом магазине");
+		options.add("Сделать выборку по книгам, сгруппировав её по авторам, и вывести количество книг для каждого автора");
 		final String header = MenuUtils.getHeader("Меню Statement", options);
 		while (true) {
 			System.out.print(header);
@@ -31,7 +32,7 @@ public class StatementMenu {
 					break;
 				}
 				case 2: {
-					statementAction.getAllInfo();
+					statementAction.viewAllInfo();
 					break;
 				}
 				case 3: {
@@ -44,10 +45,10 @@ public class StatementMenu {
 						System.out.println("1 - сортировка по имени\n2 - сортировка по фамилии");
 						switch (InputManager.getNextInt()) {
 							case 1:
-								statementAction.getAuthorInfoSorted(Author.SortingType.BY_FIRST_NAME);
+								statementAction.viewAuthorInfoSorted(Author.SortingType.BY_FIRST_NAME);
 								break authorSortLoop;
 							case 2:
-								statementAction.getAuthorInfoSorted(Author.SortingType.BY_LAST_NAME);
+								statementAction.viewAuthorInfoSorted(Author.SortingType.BY_LAST_NAME);
 								break authorSortLoop;
 							default:
 								System.out.println("1 или 2");
@@ -64,7 +65,7 @@ public class StatementMenu {
 						if (startYear < 1000){
 							System.out.println("Введите более поздний год");
 						} else {
-							statementAction.getBookInfoFiltered(startYear);
+							statementAction.viewBookInfoFiltered(startYear);
 							break startYearInputLoop;
 						}
 					}
@@ -74,6 +75,9 @@ public class StatementMenu {
 					statementAction.changeRandomBookName();
 					break;
 				}
+					case 7: {
+						statementAction.viewAmtOfBooksPerAuthor();
+					}
 				case 0: {
 					return;
 				}
