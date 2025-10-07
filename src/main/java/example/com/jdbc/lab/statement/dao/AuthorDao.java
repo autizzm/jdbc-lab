@@ -70,6 +70,20 @@ public class AuthorDao implements StatementDao<Author> {
 		return authors;
 	}
 
+	public void updateNamesByShopId(Long shopId, String newFirstName, String newLastName){
+		try(Statement stmt = ConnectionManager.getConnection().createStatement();)
+		{
+			stmt.executeUpdate("UPDATE authors SET first_name = '" + newFirstName + "', last_name = '" + newLastName +
+					"' WHERE id IN " +
+					"(SELECT books.author_id " +
+					"FROM books " +
+					"JOIN shops_books ON shops_books.book_id = books.id " +
+					"WHERE shops_books.shop_id = " + shopId +")");
+		}catch(SQLException e){
+			logger.severe("Ошибка: " + e.getMessage());
+		}
+	}
+
 	@Override
 	public Author getById(Long id) {
 		Author author = null;

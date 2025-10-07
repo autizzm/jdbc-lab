@@ -215,6 +215,32 @@ public class StatementAction {
 		}
 	}
 
+	public void changeAuthorNames() {
+		List<Shop> shops = shopDao.getAll();
+		String newFirstName = "";
+		String newLastName = "";
+		int choice = -1;
+
+		System.out.println("Выберите магазин:");
+		if (shops.isEmpty()) {
+			System.out.println("Таблица магазинов пуста!");
+		} else {
+			while (choice < 1 || choice > shops.size()) {
+				System.out.println("[Магазины]");
+				for (int i = 0; i < shops.size(); i++) {
+					System.out.println(i + 1 + " - " + shops.get(i));
+				}
+				choice = InputManager.getNextInt();
+			}
+			System.out.println("Введите имя:\n");
+			newFirstName = InputManager.getNextLine();
+			System.out.println("Введите фамилию:\n");
+			newLastName = InputManager.getNextLine();
+			long shopId = shops.get(choice).getId();
+			authorDao.updateNamesByShopId(shopId, newFirstName, newLastName);
+		}
+	}
+
 	private List<Author> getDefaultAuthors() {
 		List<Author> authors = new ArrayList<>();
 		authors.add(new Author("Лев", "Толстой"));
