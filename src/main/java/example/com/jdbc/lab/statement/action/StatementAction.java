@@ -174,6 +174,40 @@ public class StatementAction {
 		}
 	}
 
+	public void changeRandomBookName(){
+		List<Shop> shops = shopDao.getAll();
+		int choice = -1;
+		String newBookName = "";
+
+		System.out.println("Выберите магазин:");
+		if (shops.isEmpty()) {
+			System.out.println("Таблица магазинов пуста!");
+		} else {
+			while(choice < 1 || choice > shops.size()) {
+				System.out.println("[Магазины]");
+				for (int i = 0; i < shops.size(); i++) {
+					System.out.println(i + 1 + " - " + shops.get(i));
+				}
+				choice = InputManager.getNextInt();
+			}
+			System.out.println("Введите название для книги:\n");
+			newBookName = InputManager.getNextLine();
+
+			long shopId = shops.get(choice-1).getId();
+			List<ShopBook> shopBooks = shopBookDao.getAll();
+			List<Long> bookIds = new ArrayList<>();
+			Random random = new Random();
+
+			for(ShopBook shopBook : shopBooks){
+				if(shopBook.getShopId() == shopId){
+					bookIds.add(shopBook.getBookId());
+				}
+			}
+			int bookToBeAlteredIndex = Math.abs(random.nextInt() % bookIds.size());
+			bookDao.update(bookIds.get(bookToBeAlteredIndex), newBookName);
+		}
+	}
+
 	private List<Author> getDefaultAuthors() {
 		List<Author> authors = new ArrayList<>();
 		authors.add(new Author("Лев", "Толстой"));

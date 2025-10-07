@@ -20,6 +20,7 @@ public class StatementMenu {
 		options.add("Добавить дефолтную информацию");
 		options.add("Просмотреть автров с сортировкой");
 		options.add("Посмотреть книги, выпущенные после определённого года");
+		options.add("Изменить имя случайной книги в определённом магазине");
 		final String header = MenuUtils.getHeader("Меню Statement", options);
 		while (true) {
 			System.out.print(header);
@@ -67,6 +68,10 @@ public class StatementMenu {
 							break startYearInputLoop;
 						}
 					}
+					break;
+				}
+				case 6: {
+					statementAction.changeRandomBookName();
 					break;
 				}
 				case 0: {

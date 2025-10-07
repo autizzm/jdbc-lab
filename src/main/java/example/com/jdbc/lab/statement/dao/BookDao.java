@@ -9,6 +9,7 @@ import java.util.logging.Logger;
 
 import example.com.jdbc.lab.connection.ConnectionManager;
 import example.com.jdbc.lab.statement.model.Book;
+import example.com.jdbc.lab.statement.model.ShopBook;
 
 public class BookDao implements StatementDao<Book> {
 	private static final Logger logger = Logger.getLogger(BookDao.class.getName());
@@ -33,6 +34,17 @@ public class BookDao implements StatementDao<Book> {
 			throw new RuntimeException(e);
 		}
 	}
+
+	public void update(long bookId, String newName){
+		try (Statement stmt = ConnectionManager.getConnection().createStatement()) {
+			stmt.executeUpdate("UPDATE books SET title = '" + newName + "' WHERE id = "
+					+ bookId + ";");
+		} catch (SQLException e) {
+			logger.severe("Ошибка: " + e.getMessage());
+			throw new RuntimeException(e);
+		}
+	}
+
 
 	@Override
 	public int getCount() {
