@@ -81,7 +81,33 @@ public class StatementAction {
 					System.out.println(author);
 				}
 			}
-			// Здесь было бы замечательным разместить отображение всей другой информации
+			List<Shop> shops = shopDao.getAll();
+			if (shops.isEmpty()) {
+				System.out.println("Таблица магазинов пуста!");
+			} else {
+				System.out.println("[Магазины]");
+				for (Shop shop : shops) {
+					System.out.println(shop);
+				}
+			}
+			List<Book> books = bookDao.getAll();
+			if (books.isEmpty()) {
+				System.out.println("Таблица книг пуста!");
+			} else {
+				System.out.println("[Книги]");
+				for (Book book : books) {
+					System.out.println(book);
+				}
+			}
+			List<ShopBook> shopBooks = shopBookDao.getAll();
+			if (shopBooks.isEmpty()) {
+				System.out.println("Таблица магазинов пуста!");
+			} else {
+				System.out.println("[Магазины]");
+				for (ShopBook shopBook : shopBooks) {
+					System.out.println(shopBook);
+				}
+			}
 		} catch (RuntimeException e) {
 			logger.severe("При просмотре информации возникла ошибка: " + e.getMessage());
 		}
