@@ -56,9 +56,27 @@ public class BookDao implements StatementDao<Book> {
 				result.put(authorName, amtOfBooks);
 			}
 		} catch(SQLException e){
-			logger.severe("Ошибка: " + e.getMessage());
+
 		}
 		return result;
+	}
+
+	public List<Book> getBooksWithAuthorNameStartingFrom(char c){
+		List<Book> books = new ArrayList<>();
+		try(Statement stmt = ConnectionManager.getConnection().createStatement()){
+			ResultSet resultSet = stmt.executeQuery("SELECT * FROM books JOIN authors ON authors.id = books.author_id WHERE authors.last_name LIKE '" + c + "%'");
+			while (resultSet.next()) {
+				Book book = new Book();
+				book.setId(resultSet.getLong("id"));
+				book.setTitle(resultSet.getString("title"));
+				book.setAuthorId(resultSet.getLong("author_id"));
+				book.setYearOfPublication(resultSet.getInt("year_of_publication"));
+				books.add(book);
+			}
+		}catch(SQLException e){
+			logger.severe("Ошибка: " + e.getMessage());
+		}
+		return books;
 	}
 
 	@Override

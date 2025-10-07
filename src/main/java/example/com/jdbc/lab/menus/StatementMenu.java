@@ -23,6 +23,7 @@ public class StatementMenu {
 		options.add("Изменить имя случайной книги в определённом магазине");
 		options.add("Сделать выборку по книгам, сгруппировав её по авторам, и вывести количество книг для каждого автора");
 		options.add("Обновить имя всех авторов, чьи книги находятся в определённом магазине (с помощью подзапроса)");
+		options.add("Сделать выборку всех книг, авторы которых имеют фамилию, начинающуюся на определённую букву");
 		final String header = MenuUtils.getHeader("Меню Statement", options);
 		while (true) {
 			System.out.print(header);
@@ -82,6 +83,10 @@ public class StatementMenu {
 					}
 					case 8: {
 						statementAction.changeAuthorNames();
+						break;
+					}
+					case 9: {
+						statementAction.viewBooksWithAuthorNameStartingFrom();
 						break;
 					}
 					case 0: {

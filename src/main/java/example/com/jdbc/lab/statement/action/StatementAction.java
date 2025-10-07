@@ -241,6 +241,21 @@ public class StatementAction {
 		}
 	}
 
+	public void viewBooksWithAuthorNameStartingFrom(){
+		System.out.println("Введите букву:");
+		String str = InputManager.getNextLine();
+		char c = str.charAt(0);
+		List<Book> books = bookDao.getBooksWithAuthorNameStartingFrom(c);
+		if(books.isEmpty()){
+			System.out.println("Подходящих книг нет!");
+		} else {
+			System.out.println("[Книги]");
+			for (Book book : books) {
+				System.out.println(book);
+			}
+		}
+	}
+
 	private List<Author> getDefaultAuthors() {
 		List<Author> authors = new ArrayList<>();
 		authors.add(new Author("Лев", "Толстой"));

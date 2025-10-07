@@ -5,10 +5,6 @@ import example.com.jdbc.lab.menus.MainMenu;
 
 import java.util.logging.Logger;
 
-/*
-* TODO
-*  - Сделать выборку всех книг, авторы которых имеют фамилию, начинающуюся на определённую букву.
-* */
 
 
 public class Main {
