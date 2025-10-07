@@ -148,6 +148,32 @@ public class StatementAction {
 		}
 	}
 
+	public void getBookInfoFiltered(int year) {
+		try {
+			Comparator<Book> comparator = new Comparator<Book>() {
+				@Override
+				public int compare(Book o1, Book o2) {
+					return o1.getYearOfPublication().compareTo(o2.getYearOfPublication());
+				}
+			};
+			List<Book> books = bookDao.getAll();
+			if(books.isEmpty())
+			{
+				System.out.println("Таблица авторов пуста!");
+			} else
+			{
+				Collections.sort(books, comparator);
+				System.out.println("[Книги]");
+				for (Book book : books) {
+					if(book.getYearOfPublication() > year)
+						System.out.println(book);
+				}
+			}
+		} catch(RuntimeException e){
+			logger.severe("При просмотре информации возникла ошибка: " + e.getMessage());
+		}
+	}
+
 	private List<Author> getDefaultAuthors() {
 		List<Author> authors = new ArrayList<>();
 		authors.add(new Author("Лев", "Толстой"));
